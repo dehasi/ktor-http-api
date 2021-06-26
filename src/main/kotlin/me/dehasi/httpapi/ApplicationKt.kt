@@ -16,9 +16,3 @@ fun Application.module() {
     }
     registerCustomerRoutes()
 }
-
-fun Application.registerCustomerRoutes() {
-    routing {
-        customerRouting()
-    }
-}

@@ -2,6 +2,7 @@ package me.dehasi.httpapi.models
 
 import Customer
 import customerStorage
+import io.ktor.application.Application
 import io.ktor.application.call
 import io.ktor.http.HttpStatusCode.Companion.Accepted
 import io.ktor.http.HttpStatusCode.Companion.BadRequest
@@ -15,6 +16,7 @@ import io.ktor.routing.delete
 import io.ktor.routing.get
 import io.ktor.routing.post
 import io.ktor.routing.route
+import io.ktor.routing.routing
 
 fun Route.customerRouting() = {
     route("/customer") {
@@ -37,5 +39,11 @@ fun Route.customerRouting() = {
             if (customerStorage.removeIf { it.id == id }) call.respondText("Customer removed", status = Accepted)
             else call.respond(status = NotFound, "")
         }
+    }
+}
+
+fun Application.registerCustomerRoutes() {
+    routing {
+        customerRouting()
     }
 }
