@@ -9,7 +9,7 @@ import me.dehasi.httpapi.models.registerCustomerRoutes
 
 fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 
-fun Application.module() {
+fun Application.module(testing:Boolean = false) {
     install(ContentNegotiation) {
         json()
     }
