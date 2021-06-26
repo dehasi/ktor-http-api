@@ -6,6 +6,7 @@ import io.ktor.features.ContentNegotiation
 import io.ktor.routing.routing
 import io.ktor.serialization.json
 import me.dehasi.httpapi.models.customerRouting
+import me.dehasi.httpapi.models.registerCustomerRoutes
 
 
 fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
