@@ -7,6 +7,7 @@ import io.ktor.application.call
 import io.ktor.http.HttpStatusCode.Companion.Accepted
 import io.ktor.http.HttpStatusCode.Companion.BadRequest
 import io.ktor.http.HttpStatusCode.Companion.Created
+import io.ktor.http.HttpStatusCode.Companion.NoContent
 import io.ktor.http.HttpStatusCode.Companion.NotFound
 import io.ktor.request.receive
 import io.ktor.response.respond
@@ -18,11 +19,11 @@ import io.ktor.routing.post
 import io.ktor.routing.route
 import io.ktor.routing.routing
 
-fun Route.customerRouting() = {
+fun Route.customerRouting() {
     route("/customer") {
         get {
             if (customerStorage.isNotEmpty()) call.respond(customerStorage)
-            else call.respondText("not found", status = NotFound)
+            else call.respond(status = NoContent, "")
         }
         get("{id}") {
             val id = call.parameters["id"] ?: return@get call.respondText("id is needed", status = BadRequest)

@@ -2,6 +2,7 @@ import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpMethod.Companion.Get
 import io.ktor.http.HttpMethod.Companion.Post
+import io.ktor.http.HttpStatusCode.Companion.Created
 import io.ktor.http.HttpStatusCode.Companion.OK
 import io.ktor.server.testing.handleRequest
 import io.ktor.server.testing.setBody
@@ -12,27 +13,20 @@ import kotlin.test.assertEquals
 
 class OrderRouteTests {
 
-    @Test fun testGetOrder() {
+    @Test fun `create and get customer`() {
         withTestApplication({ module(testing = true) }) {
 
             handleRequest(Post, "/customer") {
                 addHeader(HttpHeaders.ContentType, ContentType.Application.Json.toString())
                 setBody(
-                    """
-                        {
-                          "id": "300",
-                          "firstName": "Mary",
-                          "lastName": "Smith",
-                          "email": "mary.smith@company.com"
-                        }
-                    """.trimIndent()
+                    """{"id": "300","firstName": "Mary","lastName": "Smith","email": "mary.smith@company.com"}"""
                 )
             }.apply {
-                assertEquals(OK, response.status())
+                assertEquals(Created, response.status())
             }
             handleRequest(Get, "/customer/300").apply {
                 assertEquals(
-                    """{}""",
+                    """{"id":"300","firstName":"Mary","lastName":"Smith","email":"mary.smith@company.com"}""",
                     response.content
                 )
                 assertEquals(OK, response.status())
